@@ -1,5 +1,7 @@
 
-@todo = []
+
+	@todo = []
+
 
 	def add_task(addtask)
 		#todo << addtask.push
@@ -11,7 +13,9 @@
 		#@todo.pop(deletetask)
 		#@todo.select {|d| d.match(/^deletetask/)}
 		#@todo.select {|d| d.include? 'deletetask' }
-		@todo.delete('deletetask')
+		#@todo.delete('deletetask')
+		@todo.delete_if { |x| x == "deletetask" }
+		#@todo.delete_if { |task| !task.delete(deletetask) }
 	end	
 
 	def complete_task(completed)
@@ -34,7 +38,8 @@ while option_selected == "n"  do
 
 
 	if option == "A"		
-		puts "Name the task you wish to add: (type 'done' when finished)"
+		puts "Name the task you wish to add: "
+
 		add = gets.chomp.downcase
 
 		if add != 'done'
@@ -44,9 +49,11 @@ while option_selected == "n"  do
 			puts @todo	
 			puts "*********************"
 			puts ""
+			puts "You have added '#{add}' to the list."
+			puts ""
 			option_selected = "n"
 		else
-			puts "test"	
+			puts "You have finished adding to the todo list."	
 		end	
 
 	elsif option == "D"
@@ -56,8 +63,14 @@ while option_selected == "n"  do
 				puts "Are you sure you want to delete '#{remove}' from the list? (Y/N)"
 				task_removal = gets.chomp.upcase
 					if task_removal == "Y" 
+						puts @todo
 						remove_task(remove)
-						puts "'#{remove}' has been deleted"				
+						puts "'#{remove}' has been deleted"		
+						puts ""
+						puts "******TODO LIST******"
+						puts @todo	
+						puts "*********************"
+						puts ""		
 					end	
 
 			else
@@ -91,6 +104,4 @@ while option_selected == "n"  do
 
 end	
 		 		 
-#puts "******TODO LIST******"
 
-#puts @todo
