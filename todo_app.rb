@@ -5,7 +5,7 @@
 
 	def add_task(addtask)
 		#todo << addtask.push
-		@todo.push(addtask)
+		@todo << addtask
 		#would like to assign a # to each task
 	end	
 
@@ -40,7 +40,7 @@ while option_selected == "n"  do
 	if option == "A"		
 		puts "Name the task you wish to add: "
 
-		add = gets.chomp.downcase
+		add = gets.chomp.downcase.to_s
 
 		if add != 'done'
 			add_task(add)
