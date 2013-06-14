@@ -3,24 +3,30 @@
 	@todo = []
 
 
+
 	def add_task(addtask)
-		#todo << addtask.push
+		#todo << addtask.push (alternative push method)
 		@todo << addtask
+		#@todo.each_with_index { |x, index| puts "#{index + 1}. #{x}" }
 		#would like to assign a # to each task
 	end	
 
 	def remove_task(deletetask)
-		#@todo.pop(deletetask)
-		#@todo.select {|d| d.match(/^deletetask/)}
-		#@todo.select {|d| d.include? 'deletetask' }
-		#@todo.delete('deletetask')
-		@todo.delete_if { |x| x == "deletetask" }
-		#@todo.delete_if { |task| !task.delete(deletetask) }
+		@todo.delete_if { |x| x == deletetask }
 	end	
 
 	def complete_task(completed)
 
 	end		
+
+	def view_tasks()
+		
+		puts ""
+			puts "******TODO LIST******"
+			puts @todo
+			puts "*********************"
+			puts ""
+	end	
 
 option_selected = "n"	
 
@@ -40,15 +46,11 @@ while option_selected == "n"  do
 	if option == "A"		
 		puts "Name the task you wish to add: "
 
-		add = gets.chomp.downcase.to_s
+		add = gets.chomp.capitalize
 
 		if add != 'done'
 			add_task(add)
-			puts ""
-			puts "******TODO LIST******"
-			puts @todo	
-			puts "*********************"
-			puts ""
+			view_tasks
 			puts "You have added '#{add}' to the list."
 			puts ""
 			option_selected = "n"
@@ -58,19 +60,15 @@ while option_selected == "n"  do
 
 	elsif option == "D"
 		puts "Name the task you wish to delete"
-		remove = gets.chomp
+		remove = gets.chomp.capitalize
 			if remove != nil
 				puts "Are you sure you want to delete '#{remove}' from the list? (Y/N)"
-				task_removal = gets.chomp.upcase
+				task_removal = gets.chomp.capitalize
 					if task_removal == "Y" 
 						puts @todo
 						remove_task(remove)
-						puts "'#{remove}' has been deleted"		
-						puts ""
-						puts "******TODO LIST******"
-						puts @todo	
-						puts "*********************"
-						puts ""		
+						view_tasks
+						puts "'#{remove}' has been deleted"			
 					end	
 
 			else
@@ -79,28 +77,23 @@ while option_selected == "n"  do
 			
 
 	elsif option == "C"
-		puts "Sorry, this option is under construction"
-		
-		#puts "Name the task you wish to mark complete"
+
+		puts "Name the task you wish to mark complete: "
+
+		finished_task = gets.chomp.capitalize
 
 	elsif option == "V"		
-		puts ""
-		puts "******TODO LIST******"
-		puts @todo
-		puts "*********************"
-		puts ""
-		puts ""
+		view_tasks
 		option_selected = "n"
 
 
-	elsif option == "E"
+	elsif option == "E" || option == "EXIT" || option == "QUIT"
 		puts "You have exited the program."
 		option_selected = "y"
 
 	else
 		puts "That option is not available."	
 	end	
-
 
 end	
 		 		 
