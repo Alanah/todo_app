@@ -1,69 +1,85 @@
 #APP: Numbered Todo List
-#FEATURES: Add Task, Delete Task, Mark Complete, View Todo List
+#FEATURES: Add Task, Delete Task, Mark/Unmark Complete, View Todo List
 
+#todo array that stores the numbered tasks
 	@todo = []
 
+#Shows the todo task menu
 	def task_menu()
-		puts ""
+		puts "\n"
 		puts "A: Add Task"
 		puts "D: Delete Task"
-		puts "C: Mark Task Complete (pending)"
+		puts "C: Mark Task Complete"
+		puts "U: Unmark Task Complete"
 		puts "V: View Todo List"
 		puts "E: Exit"
-		puts ""
+		puts "\n"
 		puts "Choose an option:"
 	end	
 
+#adds a task to the todo list
 	def add_task(addtask)
 		#todo << addtask.push (alternative push method)
 		@todo << addtask
 	end	
 
+#removes a task from the todo list
 	def remove_task(deletetask)
-		deletetask = deletetask - 1
+		deletetask -= 1
 		@todo.delete_at(deletetask)
-		#@todo.delete_if { |x| x == deletetask }  # delete by stating entire task string
+		#@todo.delete_if { |x| x == deletetask }  # deletes a task by stating entire task string instead of specifying #
 	end	
 
+#marks a task complete on the todo list
 	def complete_task(completed)
 		completed -= 1
 		@todo[completed] << " - COMPLETE" 
-	end		
+	end	
 
+#unmarks a task complete on the todo list
+	def unmark_task(unmark)
+		unmark -= 1
+		@todo[unmark].gsub!(" - COMPLETE", "")
+	end	
+
+#view the current tasks on the todo list
 	def view_tasks()	
-		puts ""
+		puts "\n"
 		puts "******TODO LIST******"
 		@todo.each_with_index { |task, index| puts "#{index + 1}. #{task}" }
 		puts "*********************"
-		puts ""
+		puts "\n"
 	end	
 
+#the initial option_selected var is set to "n" for no option has been selected as of yet
 option_selected = "n"	
 
+#while option has not been selected yet, show the menu to the user
 while option_selected == "n"  do
 
-	task_menu
+	task_menu()
 
 	option = gets.chomp.upcase
 
 	if option == "A"		
-		puts "Name the task you wish to add: "
+		puts "Name the task you wish to add or type 'done' to return to the main menu: "
 
 		add = gets.chomp.capitalize
 
-		if add != 'done'
+		if add != 'Done'
 			add_task(add)
-			view_tasks
+			view_tasks()
 			puts "You have added '#{add}' to the list."
-			puts ""
+			puts "\n"
 			option_selected = "n"
 		else
-			puts "You have finished adding to the todo list."	
+			puts "\n"
+			puts "You have NOT added a task and have returned to the main menu."	
 		end	
 
 	elsif option == "D"
 
-		view_tasks
+		view_tasks()
 
 		puts "Choose the task # you wish to delete: "
 		
@@ -75,9 +91,9 @@ while option_selected == "n"  do
 					if task_removal == "Y" 
 						puts @todo
 						remove_task(remove)
-						view_tasks
+						view_tasks()
 						puts "##{remove} has been removed from the task list."
-						puts ""			
+						puts "\n"			
 					end	
 			else
 				puts "That is not an option."
@@ -85,18 +101,31 @@ while option_selected == "n"  do
 			
 	elsif option == "C"
 
+		view_tasks()
+
 		puts "Choose the task # you wish to mark complete: "
 
-		finished_task = gets.chomp.capitalize
-		finished_task = finished_task.to_i
+		mark_complete = gets.chomp.capitalize.to_i
 
-		complete_task(finished_task)
+		complete_task(mark_complete)
 
-		view_tasks
+		view_tasks()
+
+	elsif option == "U"
+
+		view_tasks()
+
+		puts "Choose the task # you wish to unmark complete: "
+
+		unmark_complete = gets.chomp.capitalize.to_i
+
+		unmark_task(unmark_complete)
+
+		view_tasks()
 
 	elsif option == "V"	
 
-		view_tasks
+		view_tasks()
 
 		option_selected = "n"
 
