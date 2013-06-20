@@ -1,5 +1,5 @@
 #APP: Numbered Todo List
-#FEATURES: Add Task, Delete Task, Mark/Unmark Complete, View Todo List
+#FEATURES: Add Task, Delete Task, Mark/Unmark Complete, View Todo List, Date task was added, Date task was completed
 
 #todo array that stores the numbered tasks
 	@todo = []
@@ -20,7 +20,8 @@
 #adds a task to the todo list
 	def add_task(addtask)
 		#todo << addtask.push (alternative push method)
-		@todo << addtask
+		@@date = Time.new
+		@todo << addtask + @@date.strftime(" - %m/%d/%y (added)")
 	end	
 
 #removes a task from the todo list
@@ -33,21 +34,22 @@
 #marks a task complete on the todo list
 	def complete_task(completed)
 		completed -= 1
-		@todo[completed] << " - COMPLETE" 
+		@todo[completed] << @@date.strftime(" / (completed on %m/%d/%y)")
 	end	
 
 #unmarks a task complete on the todo list
 	def unmark_task(unmark)
 		unmark -= 1
-		@todo[unmark].gsub!(" - COMPLETE", "")
+		puts @todo[unmark]
+		@todo[unmark].gsub!(/ \/ \(completed on .*\)/, '')
 	end	
 
 #view the current tasks on the todo list
 	def view_tasks()	
 		puts "\n"
-		puts "******TODO LIST******"
+		puts "***********TODO LIST***********"
 		@todo.each_with_index { |task, index| puts "#{index + 1}. #{task}" }
-		puts "*********************"
+		puts "*******************************"
 		puts "\n"
 	end	
 
